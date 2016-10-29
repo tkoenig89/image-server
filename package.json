@@ -1,0 +1,17 @@
+{
+  "name": "image-server",
+  "version": "1.0.0",
+  "description": "http(s) server providing a fast rest api to a folder containing images",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rest"
+  ],
+  "author": "tkoenig89",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
