@@ -15,10 +15,6 @@ function cameraComponentController(images) {
     activate();
     function activate() {
         vm.folders = [];
-        
-        images.getDaysFromCamera(vm.cameraName).then(function (folderList) {
-            vm.folders = folderList;
-        });
 
         images.getLatestImage(vm.cameraName).then(function (latestImage) {
             vm.latest_image = latestImage;
