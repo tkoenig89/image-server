@@ -1,0 +1,13 @@
+<div class="camera">
+	<div class="camera-header">
+		<h2>{{vm.cameraName}}</h2>
+	</div>
+	<div class="camera-body">
+        <div class="latest">
+            <img ng-src="/images/{{vm.latest_image}}" alt="letztes Bild">
+        </div>
+		<div class="image-folder" ng-repeat="folder in vm.folders">
+			{{folder}}
+		</div>
+	</div>
+</div>

@@ -52,7 +52,7 @@ function loginComponentController(loginService, globals) {
     }
 
     function updateGlobalUserObject(userName) {
-        globals.User.isloggedIn = userName ? true : false;
+        globals.User.isLoggedIn = userName ? true : false;
         globals.User.userName = userName || "";
     }
 }

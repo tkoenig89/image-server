@@ -1,7 +1,7 @@
 <div id="login-module">
 	<div ng-if="!vm.userObj" ng-class="{error:vm.loginErrorOccured}">
-		<input id="username" type="text" ng-model="vm.username">
-		<input id="password" type="password" ng-model="vm.password">
+		<input id="username" type="text" ng-model="vm.username" ng-keyup="$event.keyCode == 13 && vm.login()">
+		<input id="password" type="password" ng-model="vm.password" ng-keyup="$event.keyCode == 13 && vm.login()">
 		<input type="button" value="OK" ng-click="vm.login()">
 	</div>
 	<div ng-if="vm.userObj">

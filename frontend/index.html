@@ -4,15 +4,22 @@
 	<title>Camera Viewer</title>
 	<script src="vendor/angular.min.js"></script>
     <link type="text/css" rel="stylesheet" href="components/login/login.style.css"></link>
+    <link type="text/css" rel="stylesheet" href="components/camera/camera.style.css"></link>
+	<link type="text/css" rel="stylesheet" href="components/image-viewer/image-viewer.style.css"></link>
 </head>
 
 <body ng-app="cv">
 
 	<login></login>
+	<image-viewer></image-viewer>
+
 	<script src="index.module.js"></script>
 	<script src="components/components.module.js"></script>    
 	<script src="components/login/login.component.js"></script>
     <script src="components/login/login.factory.js"></script>
+	<script src="components/image-viewer/image-viewer.component.js"></script>
+	<script src="components/image-viewer/image-viewer.factory.js"></script>
+	<script src="components/camera/camera.component.js"></script>
 
     <script src="services/services.module.js"></script>
     <script src="services/globals.factory.js"></script>
