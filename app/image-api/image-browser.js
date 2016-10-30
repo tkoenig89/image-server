@@ -1,11 +1,12 @@
 var fs = require("fs");
 var express = require('express');
 module.exports = ImageBrowser;
-function ImageBrowser(baseFolder) {
+
+function ImageBrowser(imageRootFolder) {
     var router = express.Router();
     setupRoutes();
     return router;
-    
+
     function setupRoutes() {
         router
             .get('/camera', function (req, res) {
@@ -37,7 +38,7 @@ function ImageBrowser(baseFolder) {
     }
 
     function listCameras() {
-        return findAllFilesInFolder(baseFolder, 1);
+        return findAllFilesInFolder(imageRootFolder, 1);
     }
 
     /**
@@ -46,7 +47,7 @@ function ImageBrowser(baseFolder) {
      * @returns {Promise}
      */
     function listDaysOfImages(cameraName) {
-        var folderToSearch = concatPath(baseFolder, cameraName);
+        var folderToSearch = concatPath(imageRootFolder, cameraName);
         return findAllFilesInFolder(folderToSearch, 1).then(function (files) {
             if (files) {
                 for (var i = 0; i < files.length; i++) {
@@ -58,7 +59,7 @@ function ImageBrowser(baseFolder) {
     }
 
     function latestImage(cameraName) {
-        var folderToSearch = concatPath(baseFolder, cameraName);
+        var folderToSearch = concatPath(imageRootFolder, cameraName);
         return findAllFilesInFolder(folderToSearch, 3).then(function (files) {
             if (files && files.length >= 1) {
                 return concatPath(cameraName, files[0]);
@@ -74,11 +75,14 @@ function ImageBrowser(baseFolder) {
      */
     function listAllImagesOfTheDay(cameraName, dayOfImage) {
         var subPath = concatPath(cameraName, dayOfImage);
-        var folderToSearch = concatPath(baseFolder, subPath);
+        var folderToSearch = concatPath(imageRootFolder, subPath);
         return findAllFilesInFolder(folderToSearch, 2).then(function (files) {
-            if (files && files.length >= 1) {
-                return concatPath(subPath, files[0]);
-            } else return null;
+            if (files) {
+                for (var i = 0; i < files.length; i++) {
+                    files[i] = concatPath(subPath, files[i]);
+                }
+            }
+            return files;
         });
     }
 

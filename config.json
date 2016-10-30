@@ -1,0 +1,21 @@
+{
+    "imageFolder": "",
+    "server": {
+        "cert": "",
+        "key": ""
+    },
+    "users": [
+        [
+            "userA",
+            "passwordA"
+        ],
+        [
+            "userB",
+            "passwordB",
+            1
+        ]
+    ],
+    "authentication": {
+        "loginPath": "/login"
+    }
+}

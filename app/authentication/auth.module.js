@@ -41,26 +41,20 @@ function JWTAuthHandler(app, userProvider, config) {
     }
     function setupLogin() {
         //provide user information
-        app.get(baseLoginPath + "/user", function (req, resp) {
+        app.get(baseLoginPath, function (req, resp) {
             if (req.User) {
                 resp.status(200).send(req.User.Name);
             } else {
-                resp.status(301).send("none");
+                resp.status(401).send("none");
             }
         });
+
         //provide logout capability
-        app.get(baseLoginPath + "/logout", function (req, resp) {
+        app.delete(baseLoginPath, function (req, resp) {
             tokenTransport.set(resp, "empty");
             resp.status(200).send();
         });
-        //provide a page to login or view user information if logged in
-        app.get(baseLoginPath, function (req, resp) {
-            if (req.User) {
-                resp.send('logged in as <b>' + req.User.Name + '</b> <a href="' + baseLoginPath + '/logout">logout</a>');
-            } else {
-                resp.send('<form method="POST"><input type="text" name="user"><input type="password" name="passw"><input type="submit" value="send"></form>');
-            }
-        });
+
         //allow logging in
         app.post(baseLoginPath, login);
     }
