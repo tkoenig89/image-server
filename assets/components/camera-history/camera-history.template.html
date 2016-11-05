@@ -1,0 +1,25 @@
+<div class="camera-history">
+<div ng-if="!vm.isHistoryActive">
+    <a href="" ng-click="vm.showHistory()">Historie anzeigen</a>
+</div>
+<div class="camera-history" ng-if="vm.isHistoryActive">
+    <a href="" ng-click="vm.closeHistory()">Historie schließen</a>
+    <div class="explorer">
+        <div class="folder" ng-repeat="folder in vm.folderList">
+            <div class="title" ng-click="vm.toggleFolder(folder)">{{folder.name}}</div>
+            <div class="content" ng-if="folder.isEnfolded">
+                <div class="content-loading" ng-if="!folder.isContentLoaded">lade...</div>
+                <div ng-if="folder.isContentLoaded">
+                    <div ng-repeat="image in folder.content" ng-click="vm.previewImage(image)">
+                        {{image.name}}
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <div class="preview">
+        <span>{{vm.selected.name}}</span>
+        <img ng-if="vm.selected" ng-src="{{vm.selected.url}}" alt="Vorschau Bild">
+    </div>
+</div>
+</div>

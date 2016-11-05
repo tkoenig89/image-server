@@ -6,7 +6,8 @@ function imagesFactory($http) {
     return {
         loadCameras: loadCameras,
         getDaysFromCamera: getDaysFromCamera,
-        getLatestImage: getLatestImage
+        getLatestImage: getLatestImage,
+        getImageListFromFolder:getImageListFromFolder
     }
 
     function loadCameras() {
@@ -20,6 +21,13 @@ function imagesFactory($http) {
             return resp.data;
         });
     }
+
+    function getImageListFromFolder(cameraName, folderName) {
+        return $http.get("/api/camera/" + cameraName + "/" + folderName).then(function (resp) {
+            return resp.data;
+        });
+    }
+
     function getLatestImage(cameraName) {
         return $http.get("/api/camera/" + cameraName + "/latest").then(function (resp) {
             return resp.data;
