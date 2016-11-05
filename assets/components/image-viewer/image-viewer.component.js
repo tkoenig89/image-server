@@ -2,7 +2,7 @@ angular.module("cv.components")
     .component("imageViewer", {
         controller: cameraComponentController,
         controllerAs: "vm",
-        templateUrl: "components/image-viewer/image-viewer.template.html"
+        templateUrl: "templates/image-viewer.template.html"
     });
 
 cameraComponentController.$inject = ["globals", "$scope", "images"];

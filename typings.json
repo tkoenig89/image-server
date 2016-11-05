@@ -1,6 +1,8 @@
 {
   "name": "image-server",
-  "dependencies": {},
+  "dependencies": {
+    "gulp": "registry:npm/gulp#4.0.0-alpha.2+20160817105618"
+  },
   "globalDependencies": {
     "angular": "registry:dt/angular#1.5.0+20161016133926",
     "express": "registry:dt/express#4.0.0+20160708185218",

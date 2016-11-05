@@ -15,7 +15,20 @@
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
+    "express-static-gzip": "^0.1.2",
     "jsonwebtoken": "^7.1.9",
     "passport": "^0.3.2"
+  },
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-flatten": "^0.3.1",
+    "gulp-gzip": "^1.4.0",
+    "gulp-inject": "^4.1.0",
+    "gulp-less": "^3.1.0",
+    "gulp-load-plugins": "^1.4.0",
+    "gulp-minify-css": "^1.2.4",
+    "run-sequence": "^1.2.2"
   }
 }

@@ -5,10 +5,10 @@
             "name": "Starten",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}\\app\\image-server.js",
+            "program": "${workspaceRoot}\\build\\image-server.js",
             "stopOnEntry": false,
-            "args": [],
-            "cwd": "${workspaceRoot}",
+            "args": ["${workspaceRoot}\\config.json"],
+            "cwd": "${workspaceRoot}\\build",
             "preLaunchTask": null,
             "runtimeExecutable": null,
             "runtimeArgs": [

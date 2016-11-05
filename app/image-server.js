@@ -6,6 +6,7 @@ var config = require("./core/config").load(process.argv[2] || "config.json");
 var express = require("express");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
+var staticGzip = require("express-static-gzip");
 var imageBrowser = require("./image-api/image-browser");
 var app = express();
 var httpsExpress = require("./core/express-https")(app, {
@@ -32,7 +33,7 @@ var onlyLoggedInUsers = auth.secure(roles.default);
 
 //only logged in users can view images
 app.use("/images", onlyLoggedInUsers, express.static(config.imageFolder));
-app.use("/", express.static("frontend"));
+app.use("/", staticGzip("static", { ensureGzipedFiles: true, indexFromEmptyFile: true }));
 app.use("/api", onlyLoggedInUsers, imageBrowser(config.imageFolder));
 
 //start the http server

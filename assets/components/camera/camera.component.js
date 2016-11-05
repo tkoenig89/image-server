@@ -2,7 +2,7 @@ angular.module("cv.components")
     .component("camera", {
         controller: cameraComponentController,
         controllerAs: "vm",
-        templateUrl: "components/camera/camera.template.html",
+        templateUrl: "templates/camera.template.html",
         bindings: {
             cameraName: "<"
         }

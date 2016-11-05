@@ -2,7 +2,7 @@ angular.module("cv.components")
     .component("login", {
         controller: loginComponentController,
         controllerAs: "vm",
-        templateUrl: "components/login/login.template.html"
+        templateUrl: "templates/login.template.html"
     });
 
 loginComponentController.$inject = ["loginService", "globals"];
