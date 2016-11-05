@@ -1,5 +1,22 @@
 camera-history {
-    .preview img {
+    .explorer {
+        display: inline-block;
+        width: 100px;
+        height: 300px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        .folder-entry {
+            cursor: pointer;
+            &.active {
+                background-color: gray;
+            }
+        }
+    }
+    .preview {
+        display: inline-block;
         width: 400px;
+        img {
+            max-width: 100%;
+        }
     }
 }

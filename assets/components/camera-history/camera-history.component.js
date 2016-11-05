@@ -4,32 +4,28 @@ angular.module("cv.components")
         controllerAs: "vm",
         templateUrl: "templates/camera-history.template.html",
         bindings: {
-            cameraName: "<"
+            cameraName: "<",
+            isHistoryActive: "<"
         }
     });
 
-cameraHistoryComponentController.$inject = ["images"];
-function cameraHistoryComponentController(images) {
+cameraHistoryComponentController.$inject = ["images", "$scope"];
+function cameraHistoryComponentController(images, $scope) {
     var vm = this;
     activate();
 
     function activate() {
-        vm.isHistoryActive = false;
-
-        vm.showHistory = showHistory;
-        vm.closeHistory = closeHistory;
         vm.toggleFolder = toggleFolder;
         vm.previewImage = previewImage;
+
+        //listen for changes to the active state of the history viewer
+        $scope.$watch("vm.isHistoryActive", function (newValue, oldValue) {
+            if (newValue != oldValue && newValue) {
+                loadCameraHistory();
+            }
+        });
     }
 
-    function showHistory() {
-        vm.isHistoryActive = true;
-        loadCameraHistory();
-    }
-
-    function closeHistory() {
-        vm.isHistoryActive = false;
-    }
     function toggleFolder(folder) {
         if (folder.isEnfolded) {
             folder.isEnfolded = false;
@@ -39,7 +35,9 @@ function cameraHistoryComponentController(images) {
     }
 
     function previewImage(image) {
+        if (vm.selected) { vm.selected.isActive = false; }
         vm.selected = image;
+        vm.selected.isActive = true;
     }
 
     function loadCameraHistory() {

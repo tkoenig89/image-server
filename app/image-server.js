@@ -9,10 +9,10 @@ var cookieParser = require('cookie-parser')
 var staticGzip = require("express-static-gzip");
 var imageBrowser = require("./image-api/image-browser");
 var app = express();
-// var httpsExpress = require("./core/express-https")(app, {
-//     key: config.server.key,
-//     cert: config.server.cert
-// });
+var httpsExpress = require("./core/express-https")(app, {
+    key: config.server.key,
+    cert: config.server.cert
+});
 
 //initiate the user handling module
 var userProvider = require("./authentication/user.module");
@@ -37,6 +37,5 @@ app.use("/", staticGzip("static", { ensureGzipedFiles: true, indexFromEmptyFile:
 app.use("/api", onlyLoggedInUsers, imageBrowser(config.imageFolder));
 
 //start the http server
-app.listen(8080);
-//httpsExpress.listen(8443);
+httpsExpress.listen(8443);
 console.log("listening...");
