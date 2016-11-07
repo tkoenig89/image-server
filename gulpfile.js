@@ -15,26 +15,26 @@ var cfg = {
 };
 
 gulp.task("default", ["build-fe"]);
-gulp.task("build:dev", function(callback) {
+gulp.task("build:dev", function (callback) {
     runSequence("clean", ["build-be", "build-fe:dev"], callback)
 });
-gulp.task("build", function(callback) {
+gulp.task("build", function (callback) {
     runSequence("clean", ["build-be", "build-fe"], callback)
 });
-gulp.task("build-fe", function(callback) {
+gulp.task("build-fe", function (callback) {
     runSequence("clean-static", ["vendor", "scripts", "style", "templates"], "index", callback)
 });
-gulp.task("build-fe:dev", function(callback) {
+gulp.task("build-fe:dev", function (callback) {
     runSequence("clean-static", ["vendor", "scripts:dev", "style:dev", "templates"], "index", callback)
 });
 
-gulp.task("build-be", function() {
-    return gulp.src("app/**/*.js")
+gulp.task("build-be", function () {
+    return gulp.src([cfg.sourceFolder + "**/*.js", "package.json"])
         .pipe(gulp.dest(cfg.targetFolder));
 });
 
 
-gulp.task("scripts", function() {
+gulp.task("scripts", function () {
     return gulp.src([cfg.sourceAssets + "**/*.module.js", cfg.sourceAssets + "**/*.js"])
         .pipe(plugins.concat("app.js"))
         .pipe(gulp.dest(cfg.targetAssets + cfg.scriptFolder))
@@ -42,13 +42,13 @@ gulp.task("scripts", function() {
         .pipe(gulp.dest(cfg.targetAssets + cfg.scriptFolder));
 });
 
-gulp.task("scripts:dev", function(cb) {
+gulp.task("scripts:dev", function (cb) {
     return gulp.src([cfg.sourceAssets + "**/*.module.js", cfg.sourceAssets + "**/*.js"])
         .pipe(plugins.flatten())
         .pipe(gulp.dest(cfg.targetAssets + cfg.scriptFolder));
 });
 
-gulp.task("vendor", function() {
+gulp.task("vendor", function () {
     //copy vendor scripts
     return gulp.src(cfg.vendorFolder + "**/*.js")
         .pipe(gulp.dest(cfg.targetAssets + cfg.vendorFolder))
@@ -56,7 +56,7 @@ gulp.task("vendor", function() {
         .pipe(gulp.dest(cfg.targetAssets + cfg.vendorFolder));
 });
 
-gulp.task("style", function() {
+gulp.task("style", function () {
     return gulp.src(cfg.sourceAssets + "**/*.less")
         .pipe(plugins.less())
         .pipe(plugins.concat("style.css"))
@@ -65,14 +65,14 @@ gulp.task("style", function() {
         .pipe(gulp.dest(cfg.targetAssets + cfg.styleFolder));
 });
 
-gulp.task("style:dev", function() {
+gulp.task("style:dev", function () {
     return gulp.src(cfg.sourceAssets + "**/*.less")
         .pipe(plugins.less())
         .pipe(plugins.flatten())
         .pipe(gulp.dest(cfg.targetAssets + cfg.styleFolder))
 });
 
-gulp.task("templates", function() {
+gulp.task("templates", function () {
     return gulp.src(cfg.sourceAssets + "components/**/*.html")
         .pipe(plugins.flatten())
         .pipe(gulp.dest(cfg.targetAssets + cfg.templateFolder))
@@ -80,7 +80,7 @@ gulp.task("templates", function() {
         .pipe(gulp.dest(cfg.targetAssets + cfg.templateFolder));
 });
 
-gulp.task("index", function() {
+gulp.task("index", function () {
     var headScripts = gulp.src([
         cfg.targetAssets + cfg.vendorFolder + "**/*.js",
         cfg.targetAssets + cfg.scriptFolder + "**/*.module.js",
@@ -93,7 +93,7 @@ gulp.task("index", function() {
 
     return gulp.src(cfg.sourceAssets + "index.html")
         .pipe(plugins.inject(headScripts, {
-            name: 'head', ignorePath: cfg.targetAssets, addRootSlash: false, transform: function(filepath) {
+            name: 'head', ignorePath: cfg.targetAssets, addRootSlash: false, transform: function (filepath) {
                 return '<script defer src="' + filepath + '"></script>';
             }
         }))
@@ -105,10 +105,10 @@ gulp.task("index", function() {
         .pipe(gulp.dest(cfg.targetAssets))
 });
 
-gulp.task("clean", function() {
+gulp.task("clean", function () {
     return del([cfg.targetFolder + "**/*"]);
 });
 
-gulp.task("clean-static", function() {
+gulp.task("clean-static", function () {
     return del([cfg.targetAssets + "**/*"]);
 });
