@@ -50,7 +50,7 @@ gulp.task("scripts:dev", function (cb) {
 
 gulp.task("vendor", function () {
     //copy vendor scripts
-    return gulp.src(cfg.vendorFolder + "**/*.js")
+    return gulp.src([cfg.vendorFolder + "**/*"])
         .pipe(gulp.dest(cfg.targetAssets + cfg.vendorFolder))
         .pipe(plugins.gzip())
         .pipe(gulp.dest(cfg.targetAssets + cfg.vendorFolder));
@@ -82,13 +82,15 @@ gulp.task("templates", function () {
 
 gulp.task("index", function () {
     var headScripts = gulp.src([
-        cfg.targetAssets + cfg.vendorFolder + "**/*.js",
+        cfg.targetAssets + cfg.vendorFolder + "scripts/angular.min.js",
+        cfg.targetAssets + cfg.vendorFolder + "scripts/*.js",
         cfg.targetAssets + cfg.scriptFolder + "**/*.module.js",
         cfg.targetAssets + cfg.scriptFolder + "**/*.js",
     ], { read: false });
 
     var headStyles = gulp.src([
-        cfg.targetAssets + cfg.styleFolder + "**/*.css",
+        cfg.targetAssets + cfg.vendorFolder + "styles/*.css",
+        cfg.targetAssets + cfg.styleFolder + "**/*.css"
     ], { read: false });
 
     return gulp.src(cfg.sourceAssets + "index.html")

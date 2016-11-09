@@ -1,1 +1,1 @@
-angular.module("cv", ["cv.components"]);
+angular.module("cv", ["cv.components", "ngMaterial"]);
