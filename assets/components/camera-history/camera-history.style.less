@@ -1,10 +1,27 @@
 camera-history {
+    height: 375px;
+    display: block;
     .explorer {
+        height: 375px;
         display: inline-block;
-        width: 100px;
-        height: 300px;
-        overflow-y: scroll;
+        width: 130px;
+        overflow-y: auto;
         overflow-x: hidden;
+        .folder.enfolded {
+            .folder-title {
+                font-weight: bold;
+            }
+            .folder-title:before {
+                content: ">";
+                font-weight: bold;
+            }
+        }
+        .folder-title {
+            cursor: pointer;
+        }
+        .folder-content {
+            padding-left: 10px;
+        }
         .folder-entry {
             cursor: pointer;
             &.active {
@@ -13,10 +30,20 @@ camera-history {
         }
     }
     .preview {
+        position: relative;
         display: inline-block;
-        width: 400px;
-        img {
+        width: 500px;
+        height: 375px;
+        .preview-image {
             max-width: 100%;
+        }
+        .preview-title {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            text-shadow: 0px 0px 4px #fff;
+            color: #000;
+            font-weight: bold;
         }
     }
 }

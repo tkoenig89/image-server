@@ -5,7 +5,8 @@ angular.module("cv.components")
         templateUrl: "templates/camera-history.template.html",
         bindings: {
             cameraName: "<",
-            isHistoryActive: "<"
+            isHistoryActive: "<",
+            defaultImage: "<"
         }
     });
 
@@ -22,6 +23,12 @@ function cameraHistoryComponentController(images, $scope) {
         $scope.$watch("vm.isHistoryActive", function (newValue, oldValue) {
             if (newValue != oldValue && newValue) {
                 loadCameraHistory();
+                if (!vm.selected) {
+                    vm.selected = {
+                        name: vm.defaultImage,
+                        url: "images/" + vm.defaultImage
+                    };
+                }
             }
         });
     }

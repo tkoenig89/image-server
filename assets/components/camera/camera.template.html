@@ -9,7 +9,8 @@
 		</div>
 		<div class="latest" ng-show="vm.activeTab === 0">
 			<img ng-src="/images/{{vm.latest_image}}" alt="letztes Bild">
+			<span class="latest-title">{{vm.latest_image | imageTime}}</span>
 		</div>
-		<camera-history ng-show="vm.activeTab === 1" is-history-active="vm.activeTab === 1" camera-name="vm.cameraName"></camera-history>
+		<camera-history ng-show="vm.activeTab === 1" is-history-active="vm.activeTab === 1" camera-name="vm.cameraName" default-image="vm.latest_image"></camera-history>
 	</div>
 </div>

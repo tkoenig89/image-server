@@ -1,7 +1,11 @@
 <div class="camera-history" ng-if="vm.isHistoryActive">
     <div>
+        <div class="preview">
+            <img class="preview-image" ng-if="vm.selected" ng-src="{{vm.selected.url}}" alt="Vorschau Bild">
+            <span class="preview-title">{{vm.selected.name | imageTime}}</span>
+        </div>
         <div class="explorer">
-            <div class="folder" ng-repeat="folder in vm.folderList">
+            <div class="folder" ng-repeat="folder in vm.folderList" ng-class="{enfolded:folder.isEnfolded}">
                 <div class="folder-title" ng-click="vm.toggleFolder(folder)">{{folder.name}}</div>
                 <div class="folder-content" ng-if="folder.isEnfolded">
                     <div class="content-loading" ng-if="!folder.isContentLoaded">lade...</div>
@@ -12,9 +16,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="preview">
-            <img ng-if="vm.selected" ng-src="{{vm.selected.url}}" alt="Vorschau Bild">
         </div>
     </div>
 </div>
