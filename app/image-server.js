@@ -33,9 +33,10 @@ var onlyLoggedInUsers = auth.secure(roles.default);
 
 //only logged in users can view images
 app.use("/images", onlyLoggedInUsers, express.static(config.imageFolder));
-app.use("/", staticGzip("static", { ensureGzipedFiles: true, indexFromEmptyFile: true }));
+app.use("/", staticGzip(__dirname + "/static", { ensureGzipedFiles: true, indexFromEmptyFile: true }));
 app.use("/api", onlyLoggedInUsers, imageBrowser(config.imageFolder));
 
 //start the http server
-httpsExpress.listen(8443);
-console.log("listening...");
+var port = config.server.port || 8443;
+httpsExpress.listen(port);
+console.log("listening on port", port);
