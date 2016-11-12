@@ -2,16 +2,16 @@
     <div>
         <div class="preview">
             <img class="preview-image" ng-if="vm.selected" ng-src="{{vm.selected.url}}" alt="Vorschau Bild">
-            <span class="preview-title">{{vm.selected.name | imageTime}}</span>
+            <span class="preview-title">{{vm.selected.name | timeConvert:'time'}}</span>
         </div>
         <div class="explorer">
             <div class="folder" ng-repeat="folder in vm.folderList" ng-class="{enfolded:folder.isEnfolded}">
-                <div class="folder-title" ng-click="vm.toggleFolder(folder)">{{folder.name}}</div>
+                <div class="folder-title" ng-click="vm.toggleFolder(folder)">{{folder.name | timeConvert:'date'}}</div>
                 <div class="folder-content" ng-if="folder.isEnfolded">
                     <div class="content-loading" ng-if="!folder.isContentLoaded">lade...</div>
                     <div ng-if="folder.isContentLoaded">
                         <div ng-repeat="image in folder.content" ng-click="vm.previewImage(image)" ng-class="{active:image.isActive}" class="folder-entry">
-                            {{image.name}}
+                            {{image.name | timeConvert:'time'}}
                         </div>
                     </div>
                 </div>
