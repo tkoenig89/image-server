@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${workspaceRoot}\\build\\image-server.js",
             "stopOnEntry": false,
-            "args": ["${workspaceRoot}\\config.json"],
+            "args": ["${workspaceRoot}\\config.json", "${workspaceRoot}\\mqtt-config.json"],
             "cwd": "${workspaceRoot}\\build",
             "preLaunchTask": null,
             "runtimeExecutable": null,

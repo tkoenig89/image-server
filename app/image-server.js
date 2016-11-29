@@ -2,12 +2,18 @@ var imageFolder = "/images";
 //load configuration
 var config = require("./core/config").load(process.argv[2] || "config.json");
 
+//setup mqtt receiver
+var mqttConfig = require(process.argv[3] || "mqtt-config.json");
+var MqttImageReceiver = require("./mqtt/mqtt-image-receiver");
+var mqttImageReceiver = MqttImageReceiver(mqttConfig);
+mqttImageReceiver.start();
+
 //load express dependencies
 var express = require("express");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
 var staticGzip = require("express-static-gzip");
-var imageBrowser = require("./image-api/image-browser");
+var ImageBrowser = require("./image-api/image-browser");
 var app = express();
 var httpsExpress = require("./core/express-https")(app, {
     key: config.server.key,
@@ -34,7 +40,11 @@ var onlyLoggedInUsers = auth.secure(roles.default);
 //only logged in users can view images
 app.use("/images", onlyLoggedInUsers, express.static(config.imageFolder));
 app.use("/", staticGzip(__dirname + "/static", { ensureGzipedFiles: true, indexFromEmptyFile: true }));
-app.use("/api", onlyLoggedInUsers, imageBrowser(config.imageFolder));
+
+//setup image server
+var imgBrowser = ImageBrowser(config.imageFolder);
+mqttImageReceiver.onImage(imgBrowser.onImageReceived);
+app.use("/api", onlyLoggedInUsers, imgBrowser.router);
 
 //start the http server
 var port = config.server.port || 8443;

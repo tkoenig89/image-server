@@ -4,8 +4,12 @@ module.exports = ImageBrowser;
 
 function ImageBrowser(imageRootFolder) {
     var router = express.Router();
+    var latestImages = {};
     setupRoutes();
-    return router;
+    return {
+        router: router,
+        onImageReceived: onImageReceived
+    };
 
     function setupRoutes() {
         router
@@ -22,11 +26,12 @@ function ImageBrowser(imageRootFolder) {
                 });
             })
             .get("/camera/:name/latest", function (req, res) {
-                latestImage(req.params.name).then(function (files) {
-                    res.status(200).json(files);
-                }, function (err) {
+                var imgPath = latestImage(req.params.name);
+                if (imgPath) {
+                    res.status(200).json(imgPath);
+                } else {
                     res.status(404).send();
-                });
+                };
             })
             .get("/camera/:name/:dateOfImage", function (req, res) {
                 listAllImagesOfTheDay(req.params.name, req.params.dateOfImage).then(function (files) {
@@ -39,6 +44,10 @@ function ImageBrowser(imageRootFolder) {
 
     function listCameras() {
         return findAllFilesInFolder(imageRootFolder, 1);
+    }
+
+    function onImageReceived(imagePath, cameraName) {
+        latestImages[cameraName] = imagePath.replace(imageRootFolder, "");
     }
 
     /**
@@ -59,12 +68,13 @@ function ImageBrowser(imageRootFolder) {
     }
 
     function latestImage(cameraName) {
-        var folderToSearch = concatPath(imageRootFolder, cameraName);
-        return findAllFilesInFolder(folderToSearch, 3).then(function (files) {
-            if (files && files.length >= 1) {
-                return concatPath(cameraName, files[0]);
-            } else return null;
-        });
+        return latestImages[cameraName];// && latestImages[cameraName].replace(imageRootFolder, "");
+        // var folderToSearch = concatPath(imageRootFolder, cameraName);
+        // return findAllFilesInFolder(folderToSearch, 3).then(function (files) {
+        //     if (files && files.length >= 1) {
+        //         return concatPath(cameraName, files[0]);
+        //     } else return null;
+        // });
     }
 
     /**

@@ -1,0 +1,11 @@
+{
+    "trustedHostname": "localhost",
+    "identifier": "imagereceiver",
+    "address": "tls://localhost:1883",
+    "username": "",
+    "password": "",
+    "ca": "/certs/ca.crt",
+    "subscribe_topic": "stall/+/bilder",
+    "subscribe_qos": 1,
+    "imageLocation":"/path"
+}
