@@ -1,11 +1,17 @@
 <div id="login-module">
-	<div ng-if="!vm.userObj" ng-class="{error:vm.loginErrorOccured}">
-		<input id="username" type="text" ng-model="vm.username" ng-keyup="$event.keyCode == 13 && vm.login()">
-		<input id="password" type="password" ng-model="vm.password" ng-keyup="$event.keyCode == 13 && vm.login()">
-		<input type="button" value="OK" ng-click="vm.login()">
-	</div>
-	<div ng-if="vm.userObj">
+	<md-content flex layout="row" layout-align="center center" ng-if="!vm.userObj" ng-class="{error:vm.loginErrorOccured}">
+		<md-input-container flex="1">
+			<label>Name</label>
+			<input ng-model="vm.username" ng-keyup="$event.keyCode == 13 && vm.login()">
+		</md-input-container>
+		<md-input-container flex="1">
+			<label>Passwort</label>
+			<input type="password" ng-model="vm.password" ng-keyup="$event.keyCode == 13 && vm.login()">
+		</md-input-container flex="1">
+		<md-button class="md-raised" ng-click="vm.login()">Login</md-button>
+	</md-content>
+	<md-content ng-if="vm.userObj">
 		Angemeldet als <b>{{vm.userObj}}</b>
 		<a ng-click="vm.logout()" href="">ausloggen</a>
-	</div>
+	</md-content>
 </div>
