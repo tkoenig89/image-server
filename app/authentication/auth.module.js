@@ -1,15 +1,22 @@
 var jwt = require("jsonwebtoken");
 var tokenTransport = require("./token-transport.module");
+const TOKEN_EXPIRATION_TIME = 1200; //20min
+
 module.exports = JWTAuthHandler;
+
 function JWTAuthHandler(app, userProvider, config) {
     var baseLoginPath = config.loginPath || "/login";
     init();
+
     //public api
     return {
         secure: secure
     };
+
     function init() {
-        injectMiddleWare();
+        //add jwt-lookup middleware to the application
+        app.use(jwtMiddleWare);
+
         setupLogin();
     }
     /**
@@ -36,13 +43,16 @@ function JWTAuthHandler(app, userProvider, config) {
             }
         }
     }
-    function injectMiddleWare() {
-        app.use(jwtMiddleWare);
-    }
+
     function setupLogin() {
         //provide user information
         app.get(baseLoginPath, function (req, resp) {
             if (req.User) {
+                //refresh token
+                var token = jwt.sign({ ut: req.User.PublicToken }, config.secret, { expiresIn: TOKEN_EXPIRATION_TIME });
+                tokenTransport.set(resp, token);
+
+                //respond with user info
                 resp.status(200).send(req.User.Name);
             } else {
                 resp.status(401).send("none");
@@ -70,8 +80,8 @@ function JWTAuthHandler(app, userProvider, config) {
                 resp.status(401).send(err);
             }
             else if (publicUserToken) {
-                //sign a token expiring in 20min
-                var token = jwt.sign({ ut: publicUserToken }, config.secret, { expiresIn: 1200 });
+                //sign a token expiring in 1 hour
+                var token = jwt.sign({ ut: publicUserToken }, config.secret, { expiresIn: TOKEN_EXPIRATION_TIME });
                 tokenTransport.set(resp, token);
                 resp.status(200).send();
             }
