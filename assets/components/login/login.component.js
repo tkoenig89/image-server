@@ -24,8 +24,12 @@ function loginComponentController(loginService, globals) {
     function login() {
         vm.loginErrorOccured = false;
 
-        loginService.login(vm.username, vm.password)
-            .then(updateLoginStatus, onLoginError);
+        if (vm.username && vm.password) {
+            loginService.login(vm.username, vm.password)
+                .then(updateLoginStatus, onLoginError);
+        } else {
+            onLoginError();
+        }
     }
 
     function onLoginError() {
