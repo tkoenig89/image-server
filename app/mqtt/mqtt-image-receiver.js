@@ -101,7 +101,7 @@ function MqttImageReceiver(config) {
         var targetFilePath = concatFilepath(targetFolderPath, timeFileName);
 
         fs.writeFile(targetFilePath, data.buffer, (err) => {
-            if (!err) notifyOnImageListeners(targetFilePath, data.cameraName);
+            if (!err) notifyOnImageListeners(targetFilePath, data.cameraName, data.time);
         });
 
         //keep one file in the camera folder
@@ -171,9 +171,9 @@ function MqttImageReceiver(config) {
         }
     }
 
-    function notifyOnImageListeners(imagePath, camerName) {
+    function notifyOnImageListeners(imagePath, camerName, timestamp) {
         for (var i = 0; i < onImageListeners.length; i++) {
-            setTimeout(onImageListeners[i].bind(null, imagePath, camerName), 1);
+            setTimeout(onImageListeners[i].bind(null, imagePath, camerName, timestamp), 1);
         }
     }
 }
