@@ -46,8 +46,14 @@ function ImageBrowser(imageRootFolder) {
         return findAllFilesInFolder(imageRootFolder, 1);
     }
 
-    function onImageReceived(imagePath, cameraName) {
-        latestImages[cameraName] = imagePath.replace(imageRootFolder, "");
+    function onImageReceived(imagePath, cameraName, timestamp) {
+        var current = latestImages[cameraName];        
+        if (!current || current.time < timestamp) {
+            latestImages[cameraName] = {
+                file: imagePath.replace(imageRootFolder, ""),
+                time: timestamp
+            };
+        }
     }
 
     /**
@@ -68,13 +74,7 @@ function ImageBrowser(imageRootFolder) {
     }
 
     function latestImage(cameraName) {
-        return latestImages[cameraName];// && latestImages[cameraName].replace(imageRootFolder, "");
-        // var folderToSearch = concatPath(imageRootFolder, cameraName);
-        // return findAllFilesInFolder(folderToSearch, 3).then(function (files) {
-        //     if (files && files.length >= 1) {
-        //         return concatPath(cameraName, files[0]);
-        //     } else return null;
-        // });
+        return latestImages[cameraName] && latestImages[cameraName].file;
     }
 
     /**
